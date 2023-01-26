@@ -11,13 +11,11 @@ void World::createWorld()
 {
     for (int i = 0; i < this->WORLD_SIZE; i++)
     {
-        for (int i = 0; i < this->WORLD_SIZE; i++)
+        for (int j = 0; j < this->WORLD_SIZE; j++)
         {
             this->world[i][j] = rand() % 3;
-        }
-        
-    }
-    
+        } 
+    } 
 }
 
 void World::checkAgent( )
@@ -34,7 +32,7 @@ void World::log(int step)
     Mat img(image_size, image_size, CV_8UC3, Scalar(255,255,255));
     int R, G, B;
 
-    int rect_size = 20;                        
+    int rect_size = 8;                        
 
     Scalar color;
     for ( int i = 0; i < WORLD_SIZE; i++ )
@@ -82,7 +80,27 @@ void World::log(int step)
 void World::take_random_step()
 {
     this->agent->takeRandomAction();
-    switch (this->world[this->agent->getPosition[0], this->agent->getPosition[1]])
+    int *location = &this->world[this->agent->getPosition()[0]][this->agent->getPosition()[1]];
+
+    switch (*location)
+    {
+    case FOOD:
+        this->agent->eat();
+        *location = NOTHING;
+        break;
+    case GOLD:
+        this->agent->mine();
+        *location = NOTHING;
+    default:
+        break;
+    }
+}
+
+void World::take_planned_step()
+{
+    this->agent->takePlannedAction();
+
+    switch (this->world[this->agent->getPosition()[0]][this->agent->getPosition()[1]])
     {
     case FOOD:
         this->agent->eat();
@@ -92,11 +110,6 @@ void World::take_random_step()
     default:
         break;
     }
-}
-
-void World::take_planned_step()
-{
-    // Implement me, see .h file for directions
 }
 
 void World::run(int search_type)

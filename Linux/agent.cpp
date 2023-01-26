@@ -5,7 +5,7 @@
 Agent::Agent()
 {
     srand(time(NULL));
-    int randx = rand() % this->WORLD_SIZE, randy = this->WORLD_SIZE;
+    int randx = rand() % this->WORLD_SIZE, randy = rand() % this->WORLD_SIZE;
     this->setPosition(randx, randy);
 }
 
@@ -29,7 +29,7 @@ void Agent::takeRandomAction()
         int* action = this->actions[random];
         int newPos[2] = {this->getPosition()[0] + action[0], this->getPosition()[1] + action[1]};
 
-        if (newPos[0] < this->WORLD_SIZE && newPos[1] < this->WORLD_SIZE)
+        if (newPos[0] < this->WORLD_SIZE && newPos[1] < this->WORLD_SIZE && newPos[0] >= 0 and newPos[1] >= 0)
         {
             this->setPosition(newPos[0], newPos[1]);
             valid = true;
@@ -39,7 +39,6 @@ void Agent::takeRandomAction()
 
 void Agent::takePlannedAction()
 {
-    // Implement me, see .h file for directions
 }
 
 int Agent::getHealth()

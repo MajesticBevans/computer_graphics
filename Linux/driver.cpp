@@ -11,8 +11,8 @@ int main() {
     the_world->createWorld();
     the_world->run( World::RANDOM );
 
-    the_world->createWorld();
-    the_world->run( World::PLANNED );
+    //the_world->createWorld();
+    //the_world->run( World::PLANNED );
 
     std::cout << "Simulation complete.\n";
 
